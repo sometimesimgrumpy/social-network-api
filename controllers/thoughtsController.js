@@ -54,4 +54,8 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
+
+  // post reactions stored in single reactions array field
+
+  // delete to pull and remove reaction by reactionId value
 };
