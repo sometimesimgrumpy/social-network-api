@@ -1,4 +1,4 @@
-const { User, Application } = require('../models');
+const { User, Thoughts, Friends } = require("../models");
 
 module.exports = {
   // Get all users
@@ -10,10 +10,10 @@ module.exports = {
   // Get a single user
   getSingleUser(req, res) {
     User.findOne({ _id: req.params.userId })
-      .select('-__v')
+      .select("-__v")
       .then((user) =>
         !user
-          ? res.status(404).json({ message: 'No user with that ID' })
+          ? res.status(404).json({ message: "No user with that ID" })
           : res.json(user)
       )
       .catch((err) => res.status(500).json(err));
@@ -24,15 +24,43 @@ module.exports = {
       .then((user) => res.json(user))
       .catch((err) => res.status(500).json(err));
   },
-  // Delete a user and associated apps
+  // Delete a user and associated thoughts
   deleteUser(req, res) {
     User.findOneAndDelete({ _id: req.params.userId })
       .then((user) =>
         !user
-          ? res.status(404).json({ message: 'No user with that ID' })
-          : Application.deleteMany({ _id: { $in: user.applications } })
+          ? res.status(404).json({ message: "No user with that ID" })
+          : Thoughts.deleteMany({ _id: { $in: user.applications } })
       )
-      .then(() => res.json({ message: 'User and associated apps deleted!' }))
+      .then(() => res.json({ message: "User and associated apps deleted!" }))
+      .catch((err) => res.status(500).json(err));
+  },
+  // add Thoughts
+  addThoughts(req, res) {
+    User.findOneAndUpdate(
+      { _id: req.params.applicationId },
+      { $addToSet: { thoughts: req.body } },
+      { runValidators: true, new: true }
+    )
+      .then((application) =>
+        !application
+          ? res.status(404).json({ message: "No application with this id!" })
+          : res.json(application)
+      )
+      .catch((err) => res.status(500).json(err));
+  },
+  // remove thoughts
+  removeThought(req, res) {
+    Application.findOneAndUpdate(
+      { _id: req.params.applicationId },
+      { $pull: { thought: { thoughtId: req.params.thoughtId } } },
+      { runValidators: true, new: true }
+    )
+      .then((application) =>
+        !application
+          ? res.status(404).json({ message: "No application with this id!" })
+          : res.json(application)
+      )
       .catch((err) => res.status(500).json(err));
   },
 };

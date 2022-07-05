@@ -1,4 +1,4 @@
-const { Application, User } = require('../models');
+const { Application, User } = require("../models");
 
 module.exports = {
   getApplications(req, res) {
@@ -10,12 +10,12 @@ module.exports = {
     Application.findOne({ _id: req.params.applicationId })
       .then((application) =>
         !application
-          ? res.status(404).json({ message: 'No application with that ID' })
+          ? res.status(404).json({ message: "No application with that ID" })
           : res.json(application)
       )
       .catch((err) => res.status(500).json(err));
   },
-  // TODO: Add comments to the functionality of the createApplication method
+
   createApplication(req, res) {
     Application.create(req.body)
       .then((application) => {
@@ -28,16 +28,16 @@ module.exports = {
       .then((user) =>
         !user
           ? res.status(404).json({
-              message: 'Application created, but found no user with that ID',
+              message: "Application created, but found no user with that ID",
             })
-          : res.json('Created the application 🎉')
+          : res.json("Created the application 🎉")
       )
       .catch((err) => {
         console.log(err);
         res.status(500).json(err);
       });
   },
-  // TODO: Add comments to the functionality of the updateApplication method
+
   updateApplication(req, res) {
     Application.findOneAndUpdate(
       { _id: req.params.applicationId },
@@ -46,7 +46,7 @@ module.exports = {
     )
       .then((application) =>
         !application
-          ? res.status(404).json({ message: 'No application with this id!' })
+          ? res.status(404).json({ message: "No application with this id!" })
           : res.json(application)
       )
       .catch((err) => {
@@ -54,12 +54,12 @@ module.exports = {
         res.status(500).json(err);
       });
   },
-  // TODO: Add comments to the functionality of the deleteApplication method
+
   deleteApplication(req, res) {
     Application.findOneAndRemove({ _id: req.params.applicationId })
       .then((application) =>
         !application
-          ? res.status(404).json({ message: 'No application with this id!' })
+          ? res.status(404).json({ message: "No application with this id!" })
           : User.findOneAndUpdate(
               { applications: req.params.applicationId },
               { $pull: { applications: req.params.applicationId } },
@@ -69,13 +69,13 @@ module.exports = {
       .then((user) =>
         !user
           ? res.status(404).json({
-              message: 'Application created but no user with this id!',
+              message: "Application created but no user with this id!",
             })
-          : res.json({ message: 'Application successfully deleted!' })
+          : res.json({ message: "Application successfully deleted!" })
       )
       .catch((err) => res.status(500).json(err));
   },
-  // TODO: Add comments to the functionality of the addTag method
+
   addTag(req, res) {
     Application.findOneAndUpdate(
       { _id: req.params.applicationId },
@@ -84,12 +84,12 @@ module.exports = {
     )
       .then((application) =>
         !application
-          ? res.status(404).json({ message: 'No application with this id!' })
+          ? res.status(404).json({ message: "No application with this id!" })
           : res.json(application)
       )
       .catch((err) => res.status(500).json(err));
   },
-  // TODO: Add comments to the functionality of the addTag method
+
   removeTag(req, res) {
     Application.findOneAndUpdate(
       { _id: req.params.applicationId },
@@ -98,9 +98,11 @@ module.exports = {
     )
       .then((application) =>
         !application
-          ? res.status(404).json({ message: 'No application with this id!' })
+          ? res.status(404).json({ message: "No application with this id!" })
           : res.json(application)
       )
       .catch((err) => res.status(500).json(err));
   },
+
+  // add Thoughts structure to add and remove
 };

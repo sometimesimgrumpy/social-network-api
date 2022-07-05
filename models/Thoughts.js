@@ -6,10 +6,11 @@ const thoughtsSchema = new Schema(
       type: Schema.Types.ObjectId,
       default: () => new Types.ObjectId(),
     },
-    thoughtBody: {
+    thoughtText: {
       type: String,
       required: true,
-      maxlength: 500,
+      minlength: 1,
+      maxlength: 280,
     },
     createdAt: {
       type: Date,
