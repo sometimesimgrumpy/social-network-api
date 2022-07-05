@@ -32,7 +32,6 @@ const userSchema = new Schema(
         ref: "Friends",
       },
     ],
-    //userId:
   },
   {
     // Mongoose supports two Schema options to transform Objects after querying MongoDb: toJSON and toObject.

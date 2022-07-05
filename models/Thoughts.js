@@ -16,6 +16,8 @@ const thoughtsSchema = new Schema(
       type: Date,
       default: Date.now,
     },
+    username: [User],
+    reactions: [Reactions],
   },
   {
     toJSON: {
@@ -24,6 +26,10 @@ const thoughtsSchema = new Schema(
     id: false,
   }
 );
+
+thoughtsSchema.virtual("reactionCount").get(function () {
+  return this.reactions.length;
+});
 
 const Thoughts = model("thoughts", thoughtsSchema);
 
