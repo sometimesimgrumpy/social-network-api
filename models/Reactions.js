@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, Types, model } = require("mongoose");
 const User = require("./User");
 
 const reactionsSchema = new Schema(
@@ -23,3 +23,6 @@ const reactionsSchema = new Schema(
 
 // getter for timestamp on query
 //reactionsSchema.
+const Reactions = model("reactions", reactionsSchema);
+
+module.exports = Reactions;

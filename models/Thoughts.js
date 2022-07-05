@@ -1,4 +1,4 @@
-const { Schema, Types } = require("mongoose");
+const { Schema, Types, model } = require("mongoose");
 const User = require("./User");
 const Reactions = require("./Reactions");
 
