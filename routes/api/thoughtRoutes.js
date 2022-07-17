@@ -12,6 +12,6 @@ router.route("/").get(getThoughts).post(createThought);
 
 // /api/thoughts/:thoughtId/reactions
 
-router.router("/:thoughtId").get(getSingleThought);
+router.route("/:thoughtId").get(getSingleThought);
 
 module.exports = router;
